@@ -1,29 +1,9 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "asdfasdf",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "ddddd",
-      "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "asdfadf",
-      "id": 4
-    },
-    {
-      "name": "asdfadf",
-      "number": "adfadfff",
-      "id": 5
+      "name": "adfdf",
+      "number": "sss",
+      "id": 6
     }
   ]
 }

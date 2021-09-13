@@ -3,12 +3,14 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import noteService from './services/notes'
+import Notification from './components/Notification'
 
 const App = () => {
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [newFilter, setNewFilter] = useState('')
+    const [notif, setNotif] = useState(null)
 
     const filterChangeHandler = (event) =>
         setNewFilter(event.target.value)
@@ -23,6 +25,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification notif={notif} />
             <Filter value={newFilter} onChange={filterChangeHandler} />
             <h3>add a new</h3>
             <PersonForm
@@ -32,6 +35,7 @@ const App = () => {
                 newNumber={newNumber}
                 persons={persons}
                 setPersons={(props) => setPersons(props)}
+                setNotif={(props) => setNotif(props)}
             />
             <h3>Numbers</h3>
             <Persons

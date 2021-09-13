@@ -1,7 +1,7 @@
 import React from 'react'
 import noteService from '../services/notes'
 
-const PersonForm = ({newName, setNewName, setNewNumber, newNumber, persons, setPersons}) => {
+const PersonForm = ({newName, setNewName, setNewNumber, newNumber, persons, setPersons, setNotif}) => {
 
     const nameChangeHandler = (event) =>
         setNewName(event.target.value)
@@ -14,7 +14,7 @@ const PersonForm = ({newName, setNewName, setNewNumber, newNumber, persons, setP
         const index = persons.findIndex(person => person.name === newName)
 
         if (index !== -1) {
-            if (window.confirm(`${newName} is already added to Phonebook, replace the old number with a new one?`))
+            if (window.confirm(`${newName} is already added to Phonebook, replace the old number with a new one?`)) {
                 noteService
                     .update(
                         persons[index].id,
@@ -30,6 +30,13 @@ const PersonForm = ({newName, setNewName, setNewNumber, newNumber, persons, setP
                                     )
                             )
                     )
+                    .then(() =>
+                        setNotif({error: false, message: `Successfully update ${persons[index].name}`})
+                    )
+                    .catch(() =>
+                        setNotif({error: true, message:`Information of ${persons[index].name} has already been removed from the server`})
+                    )
+            }
         }
 
         else {
@@ -41,10 +48,14 @@ const PersonForm = ({newName, setNewName, setNewNumber, newNumber, persons, setP
             noteService
                 .add(toAdd)
                 .then(response => setPersons(persons.concat(response)))
+                .then(() =>
+                    setNotif({error: false, message: `Successfully added ${toAdd.name}`})
+                )
         }
 
         setNewName('')
         setNewNumber('')
+        setTimeout(() => setNotif(null), 5000)
     }
 
     return (
