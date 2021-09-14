@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 const getRandomInt = (max) =>
     Math.floor(Math.random() * max)
+
 const isValid = (req) => {
     body = req.body
 
@@ -26,7 +28,15 @@ let persons = [
     }
 ]
 
+morgan.token('body', (req, res) => {
+    if (req.method === 'POST')
+        return JSON.stringify(req.body)
+    else
+        return ' '
+})
+
 app.use(express.json())
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 app.get('/info', (req, res) => {
     const toSendFirst = `<p>Phonebook has info for ${persons.length} people<p>`
