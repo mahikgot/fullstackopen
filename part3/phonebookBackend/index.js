@@ -65,11 +65,22 @@ app.get('/api/persons/:id', (req, res) => {
 })
 
 app.delete('/api/persons/:id', (req, res) => {
-    const id = req.params.id
-    persons = persons.filter(person => person.id !== Number(id))
+    const id = Number(req.params.id)
+    persons = persons.filter(person => person.id !== id)
     console.log(persons)
     res.status(204).end()
 })
+app.put('/api/persons/:id', (req, res) => {
+    const id = Number(req.params.id)
+    persons = persons.map(person =>
+        person.id === id
+            ? {...person, number: req.body.number}
+            : person
+    )
+    const person = persons.find(person => person.id === id)
+    res.json(person)
+})
+
 
 app.post('/api/persons', (req, res) => {
     const id = getRandomInt(10000)
