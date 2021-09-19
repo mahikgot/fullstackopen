@@ -85,6 +85,7 @@ app.post('/api/persons', async (req, res, next) => {
         })
         person.save()
             .then(result => res.json(result))
+            .catch(err => next(err))
     }
     else
         next(isOk)
@@ -92,6 +93,8 @@ app.post('/api/persons', async (req, res, next) => {
 
 const errorHandler = (err, req, res, next) => {
     if (err.name === 'CastError')
+        res.status(400).send({error: err.message})
+    else if (err.name === 'ValidationError')
         res.status(400).send({error: err.message})
     else if ((err.name === 'name must be unique') || (err.name === 'body must have name and number'))
         res.status(400).send({error: err.name})
