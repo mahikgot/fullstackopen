@@ -93,7 +93,7 @@ const errorHandler = (err, req, res, next) => {
         res.status(400).send({error: 'malformatted id'})
     else if ((err.name === 'name must be unique') || (err.name === 'body must have name and number'))
         res.status(400).send({error: err.name})
-    next(err)
+    //next(err)
 }
 
 app.use(errorHandler)
