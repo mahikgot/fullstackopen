@@ -33,8 +33,8 @@ const PersonForm = ({newName, setNewName, setNewNumber, newNumber, persons, setP
                     .then(() =>
                         setNotif({error: false, message: `Successfully update ${persons[index].name}`})
                     )
-                    .catch(() =>
-                        setNotif({error: true, message:`Information of ${persons[index].name} has already been removed from the server`})
+                    .catch(error =>
+                        setNotif({error: true, message:error.response.data.error})
                     )
             }
         }
@@ -51,11 +51,13 @@ const PersonForm = ({newName, setNewName, setNewNumber, newNumber, persons, setP
                 .then(() =>
                     setNotif({error: false, message: `Successfully added ${toAdd.name}`})
                 )
+                .catch(error =>
+                    setNotif({error: true, message: error.response.data.error}))
         }
 
         setNewName('')
         setNewNumber('')
-        setTimeout(() => setNotif(null), 5000)
+        setTimeout(() => setNotif(null), 1000)
     }
 
     return (
