@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const morgan = require('morgan');
 const log = require('./utils/logger');
-const Blog = require('/models/blog');
+const Blog = require('./models/blog');
 
 const app = express();
 
