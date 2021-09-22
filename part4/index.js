@@ -3,17 +3,10 @@ const mongoose = require('mongoose');
 const express = require('express');
 const morgan = require('morgan');
 const log = require('./utils/logger');
+const Blog = require('/models/blog');
 
 const app = express();
 
-const blogSchema = new mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
-  likes: Number,
-});
-
-const Blog = mongoose.model('Blog', blogSchema);
 const mongoUrl = 'mongodb://localhost/bloglist';
 mongoose.connect(mongoUrl);
 
