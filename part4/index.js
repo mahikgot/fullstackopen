@@ -2,6 +2,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const express = require('express');
 const morgan = require('morgan');
+const log = require('./utils/logger');
 
 const app = express();
 
@@ -34,4 +35,4 @@ app.post('/api/blogs', (req, res) => {
 });
 
 const PORT = 3003;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => log.info(`Server running on port ${PORT}`));
