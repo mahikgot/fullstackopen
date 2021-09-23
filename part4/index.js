@@ -1,8 +1,7 @@
-const cors = require('cors');
 const express = require('express');
-const morgan = require('morgan');
 const log = require('./utils/logger');
 const Blog = require('./models/blog');
+const { cors, morgan } = require('./utils/middleware');
 
 const app = express();
 
