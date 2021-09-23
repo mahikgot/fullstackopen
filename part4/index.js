@@ -1,26 +1,13 @@
 const express = require('express');
 const log = require('./utils/logger');
-const Blog = require('./models/blog');
 const { cors, morgan } = require('./utils/middleware');
+const blogListRouter = require('./controllers/blogs');
 
 const app = express();
 
 app.use(cors());
 app.use(morgan('tiny'));
 
-app.get('/api/blogs', (req, res) => {
-  Blog
-    .find({})
-    .then((blogs) => res.json(blogs));
-});
-
-app.post('/api/blogs', (req, res) => {
-  const blog = new Blog(req.body);
-
-  blog
-    .save()
-    .then((result) => res.status(201).json(result));
-});
-
+app.use('/api/blogs', blogListRouter);
 const PORT = 3003;
 app.listen(PORT, () => log.info(`Server running on port ${PORT}`));
