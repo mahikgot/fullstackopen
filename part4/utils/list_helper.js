@@ -17,8 +17,4 @@ const favoriteBlog = (blogs) => {
   };
   return returnee;
 };
-
-const mostBlogs = (blogs) => {
-  const names = blogs.map(({ author }) => author);
-};
 module.exports = { totalLikes, favoriteBlog };
