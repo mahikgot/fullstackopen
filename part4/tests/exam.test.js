@@ -50,7 +50,7 @@ describe('backend test', () => {
     const { body } = await api
       .get('/api/blogs')
       .expect(200);
-    const ids = body.map((result) => result.id);
+    const ids = getIds(body);
     expect(ids).toBeDefined();
   });
 });
