@@ -46,6 +46,13 @@ describe('backend test', () => {
     const localIds = blogs.map((result) => result._id);
     expect(ids).toMatchObject(localIds);
   });
+  test('id defined', async () => {
+    const { body } = await api
+      .get('/api/blogs')
+      .expect(200);
+    const ids = body.map((result) => result.id);
+    expect(ids).toBeDefined();
+  });
 });
 
 afterAll(() => {
