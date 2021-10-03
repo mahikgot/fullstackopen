@@ -71,6 +71,19 @@ describe('backend test', () => {
     const ids = getIds(body);
     expect(ids).toBeDefined();
   });
+  test('likes 0 if missing from request', async () => {
+    const blog = {
+      title: 'tanga ka ba?',
+      author: 'Mark Guiang',
+      url: 'secrethihe',
+    };
+    const { body } = await api
+      .post('/api/blogs')
+      .send(blog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
+    expect(body.likes).toBe(0);
+  });
 });
 
 afterAll(() => {
