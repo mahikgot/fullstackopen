@@ -46,6 +46,24 @@ describe('backend test', () => {
     const localIds = getIds(blogs);
     expect(ids).toMatchObject(localIds);
   });
+  test('HTTP POST /api/blogs', async () => {
+    const blog = {
+      title: 'tanga ka ba?',
+      author: 'Mark Guiang',
+      url: 'secrethihe',
+      likes: 69,
+    };
+    const { body } = await api
+      .post('/api/blogs')
+      .send(blog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
+    const blogWithId = {
+      ...blog,
+      id: body.id,
+    };
+    expect(body).toMatchObject(blogWithId);
+  });
   test('id defined', async () => {
     const { body } = await api
       .get('/api/blogs')
