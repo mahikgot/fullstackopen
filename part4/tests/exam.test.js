@@ -42,7 +42,9 @@ describe('backend test', () => {
     const { body } = await api
       .get('/api/blogs')
       .expect(200);
-    expect(body).toMatchObject(blogs);
+    const ids = body.map((result) => result.id);
+    const localIds = blogs.map((result) => result._id);
+    expect(ids).toMatchObject(localIds);
   });
 });
 
