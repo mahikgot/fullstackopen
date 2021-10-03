@@ -1,6 +1,6 @@
 const supertest = require('supertest');
 const mongoose = require('mongoose');
-const listHelper = require('../utils/list_helper');
+const { totalLikes, favoriteBlog, getIds } = require('../utils/list_helper');
 const { blogs } = require('./test_helper');
 const app = require('../app');
 const Blog = require('../models/blog');
@@ -17,7 +17,7 @@ describe('total likes', () => {
     const { body } = await api
       .get('/api/blogs')
       .expect(200);
-    const total = listHelper.totalLikes(body);
+    const total = totalLikes(body);
     expect(total).toBe(36);
   });
 });
@@ -32,7 +32,7 @@ describe('highest likes', () => {
     const { body } = await api
       .get('/api/blogs')
       .expect(200);
-    const fave = listHelper.favoriteBlog(body);
+    const fave = favoriteBlog(body);
     expect(fave).toEqual(right);
   });
 });
@@ -42,8 +42,8 @@ describe('backend test', () => {
     const { body } = await api
       .get('/api/blogs')
       .expect(200);
-    const ids = body.map((result) => result.id);
-    const localIds = blogs.map((result) => result._id);
+    const ids = getIds(body);
+    const localIds = getIds(blogs);
     expect(ids).toMatchObject(localIds);
   });
   test('id defined', async () => {

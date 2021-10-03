@@ -17,4 +17,9 @@ const favoriteBlog = (blogs) => {
   };
   return returnee;
 };
-module.exports = { totalLikes, favoriteBlog };
+
+const getIds = (blogs) => {
+  if (blogs[0].id) return blogs.map((blog) => blog.id);
+  return blogs.map((blog) => blog._id);
+};
+module.exports = { totalLikes, favoriteBlog, getIds };
