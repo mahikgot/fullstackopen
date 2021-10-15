@@ -84,6 +84,12 @@ describe('backend test', () => {
       .expect('Content-Type', /application\/json/);
     expect(body.likes).toBe(0);
   });
+  test('delete one blog post', async () => {
+    const id = '5a422a851b54a676234d17f7';
+    await api
+      .delete(`/api/blogs/${id}`)
+      .expect(204);
+  });
 });
 
 afterAll(() => {
