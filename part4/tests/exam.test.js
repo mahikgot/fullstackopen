@@ -96,10 +96,11 @@ describe('backend test', () => {
       id: '5a422a851b54a676234d17f7',
       author: 'Michael Chan',
       url: 'https://reactpatterns.com/',
-      likes: 7,
+      likes: 1,
     };
     const { body } = await api
       .put(`/api/blogs/${updated.id}`)
+      .send(updated)
       .expect(200);
     expect(body).toEqual(updated);
   });
