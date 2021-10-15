@@ -90,6 +90,19 @@ describe('backend test', () => {
       .delete(`/api/blogs/${id}`)
       .expect(204);
   });
+  test('update likes', async () => {
+    const updated = {
+      title: 'React patterns',
+      id: '5a422a851b54a676234d17f7',
+      author: 'Michael Chan',
+      url: 'https://reactpatterns.com/',
+      likes: 7,
+    };
+    const { body } = await api
+      .put(`/api/blogs/${updated.id}`)
+      .expect(200);
+    expect(body).toEqual(updated);
+  });
 });
 
 afterAll(() => {
