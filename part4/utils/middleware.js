@@ -14,7 +14,7 @@ const authMiddleware = (req, res, next) => {
       const token = authHeader.substring(7);
       const verified = jwt.verify(token, SECRET);
       if (verified) {
-        res.locals.userData = verified;
+        res.locals.token = verified;
         return next();
       }
     }
