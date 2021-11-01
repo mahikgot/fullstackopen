@@ -1,18 +1,20 @@
 const supertest = require('supertest');
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const { totalLikes, favoriteBlog, getIds } = require('../utils/list_helper');
 const { blogs } = require('./test_helper');
 const app = require('../app');
 const Blog = require('../models/blog');
+const User = require('../models/user');
 
 const api = supertest(app);
 
-beforeEach(async () => {
-  await Blog.deleteMany({});
-  await Blog.insertMany(blogs);
-});
+describe('blog test', () => {
+  beforeEach(async () => {
+    await Blog.deleteMany({});
+    await Blog.insertMany(blogs);
+  });
 
-describe('total likes', () => {
   test('totalLikes', async () => {
     const { body } = await api
       .get('/api/blogs')
@@ -20,9 +22,6 @@ describe('total likes', () => {
     const total = totalLikes(body);
     expect(total).toBe(36);
   });
-});
-
-describe('highest likes', () => {
   test('favoriteBlog', async () => {
     const right = {
       title: 'Canonical string reduction',
@@ -35,9 +34,6 @@ describe('highest likes', () => {
     const fave = favoriteBlog(body);
     expect(fave).toEqual(right);
   });
-});
-
-describe('backend test', () => {
   test('HTTP GET /api/blogs', async () => {
     const { body } = await api
       .get('/api/blogs')
@@ -106,6 +102,106 @@ describe('backend test', () => {
   });
 });
 
+describe('user test', () => {
+  beforeEach(async () => {
+    const passwordHash = await bcrypt.hash('password', 10);
+    const user = new User({
+      username: 'root',
+      name: 'mark guiang',
+      passwordHash,
+    });
+
+    await User.deleteMany({});
+    await user.save();
+  });
+
+  test('no username', async () => {
+    const user = {
+      name: 'mark pogi',
+      password: 'tangatanga',
+    };
+
+    const initUsers = await User.find({});
+    const { body } = await api
+      .post('/api/users')
+      .send(user)
+      .expect(400);
+    const afterUsers = await User.find({});
+
+    expect(body.error).toContain('username and password required');
+    expect(afterUsers.length).toEqual(initUsers.length);
+  });
+
+  test('no password', async () => {
+    const user = {
+      username: 'badongtakla',
+      name: 'mark pogi',
+    };
+
+    const initUsers = await User.find({});
+    const { body } = await api
+      .post('/api/users')
+      .send(user)
+      .expect(400);
+    const afterUsers = await User.find({});
+
+    expect(body.error).toContain('username and password required');
+    expect(afterUsers.length).toEqual(initUsers.length);
+  });
+
+  test('not unique username', async () => {
+    const user = {
+      username: 'root',
+      password: 'tanginamo',
+      name: 'mark pogi',
+    };
+
+    const initUsers = await User.find({});
+    const { body } = await api
+      .post('/api/users')
+      .send(user)
+      .expect(400);
+    const afterUsers = await User.find({});
+
+    expect(body.error).toContain('username must be unique');
+    expect(afterUsers.length).toEqual(initUsers.length);
+  });
+
+  test('username too short', async () => {
+    const user = {
+      username: 'ba',
+      password: 'maenmean',
+      name: 'mark pogi',
+    };
+
+    const initUsers = await User.find({});
+    const { body } = await api
+      .post('/api/users')
+      .send(user)
+      .expect(400);
+    const afterUsers = await User.find({});
+
+    expect(body.error).toContain('username and password must be at least 3 chars long');
+    expect(afterUsers.length).toEqual(initUsers.length);
+  });
+  test('password too short', async () => {
+    const user = {
+      username: 'badongtakla',
+      password: 'ma',
+      name: 'mark pogi',
+    };
+
+    const initUsers = await User.find({});
+    const { body } = await api
+      .post('/api/users')
+      .send(user)
+      .expect(400);
+    const afterUsers = await User.find({});
+
+    expect(body.error).toContain('username and password must be at least 3 chars long');
+    expect(afterUsers.length).toEqual(initUsers.length);
+  });
+});
 afterAll(() => {
   mongoose.disconnect();
 });
