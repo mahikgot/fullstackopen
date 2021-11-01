@@ -18,12 +18,12 @@ loginRouter.post('/', async (req, res) => {
   }
 
   const userInfo = {
-    username: body.username,
-    name: body.name,
+    username: user.username,
+    id: user._id,
   };
   const token = jwt.sign(userInfo, SECRET);
 
-  res.json({ token, username: body.username, name: body.name });
+  res.json({ token, username: user.username, name: user.name });
 });
 
 module.exports = loginRouter;
