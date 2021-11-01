@@ -1,15 +1,21 @@
 const express = require('express');
 const Blog = require('../models/blog');
+const User = require('../models/user');
 
 const blogListRouter = express.Router();
 
 blogListRouter.get('/', async (req, res) => {
-  const blogs = await Blog.find({});
+  const blogs = await Blog.find({}).populate('user');
   res.json(blogs);
 });
 
 blogListRouter.post('/', async (req, res) => {
-  const blog = new Blog(req.body);
+  const { body } = req;
+
+  const blog = new Blog({
+    ...body,
+    user: res.locals.userData.id,
+  });
   const saved = await blog.save();
   res.json(saved);
 });
