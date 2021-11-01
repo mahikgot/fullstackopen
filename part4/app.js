@@ -3,6 +3,8 @@ require('express-async-errors');
 const mongoose = require('mongoose');
 const config = require('./utils/config');
 const { cors, morgan } = require('./utils/middleware');
+
+const loginRouter = require('./controllers/login');
 const blogListRouter = require('./controllers/blogs');
 const userRouter = require('./controllers/users');
 
@@ -16,6 +18,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('tiny'));
 }
 
+app.use('/api/login', loginRouter);
 app.use('/api/blogs', blogListRouter);
 app.use('/api/users', userRouter);
 
