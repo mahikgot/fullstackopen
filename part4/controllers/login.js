@@ -6,15 +6,14 @@ const { SECRET } = require('../utils/config');
 
 loginRouter.post('/', async (req, res) => {
   const { body } = req;
-
   const user = await User.findOne({ username: body.username });
   if (!user) {
-    res.status(401).json({ error: 'username does not exist' });
+    return res.status(401).json({ error: 'username does not exist' });
   }
 
   const passwordCorrect = await bcrypt.compare(body.password, user.passwordHash);
   if (!passwordCorrect) {
-    res.status(401).json({ error: 'password is incorrect' });
+    return res.status(401).json({ error: 'password is incorrect' });
   }
 
   const userInfo = {
@@ -23,7 +22,7 @@ loginRouter.post('/', async (req, res) => {
   };
   const token = jwt.sign(userInfo, SECRET);
 
-  res.json({ token, username: user.username, name: user.name });
+  return res.json({ token, username: user.username, name: user.name });
 });
 
 module.exports = loginRouter;

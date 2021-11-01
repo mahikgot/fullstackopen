@@ -7,6 +7,6 @@ module.exports = {
   rules: {
     'linebreak-style': ['error', 'windows'],
     'no-underscore-dangle': ['error', { allow: ['__v', '_id'] }],
-    'no-param-reassign': ['error', {props: true, ignorePropertyModificationsFor: ['ret'] }],
+    'no-param-reassign': ['error', {props: true, ignorePropertyModificationsFor: ['ret', 'res'] }],
   },
 };
