@@ -20,8 +20,9 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('tiny'));
 }
 app.use(getToken);
-app.post('/api/*', authMiddleware);
+
 app.use('/api/login', loginRouter);
+app.post('/api/blogs', authMiddleware, blogListRouter);
 app.use('/api/blogs', blogListRouter);
 app.use('/api/users', userRouter);
 

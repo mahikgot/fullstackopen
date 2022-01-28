@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const { SECRET } = require('./config');
 
 const authMiddleware = (req, res, next) => {
-  if (req.url === '/api/login') return next();
   const userData = jwt.verify(res.locals.token, SECRET);
   if (userData) {
     res.locals.userData = userData;
