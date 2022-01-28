@@ -23,6 +23,7 @@ app.use(getToken);
 
 app.use('/api/login', loginRouter);
 app.post('/api/blogs', authMiddleware, blogListRouter);
+app.delete('/api/blogs/*', authMiddleware, blogListRouter);
 app.use('/api/blogs', blogListRouter);
 app.use('/api/users', userRouter);
 

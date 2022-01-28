@@ -4,12 +4,13 @@ const jwt = require('jsonwebtoken');
 const { SECRET } = require('./config');
 
 const authMiddleware = (req, res, next) => {
-  const userData = jwt.verify(res.locals.token, SECRET);
-  if (userData) {
+  try {
+    const userData = jwt.verify(res.locals.token, SECRET);
     res.locals.userData = userData;
     return next();
+  } catch (error) {
+    return res.status(401).end();
   }
-  return res.status(401).end();
 };
 
 const getToken = (req, res, next) => {

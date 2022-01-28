@@ -1,6 +1,5 @@
 const express = require('express');
 const Blog = require('../models/blog');
-const User = require('../models/user');
 
 const blogListRouter = express.Router();
 
@@ -21,8 +20,13 @@ blogListRouter.post('/', async (req, res) => {
 });
 
 blogListRouter.delete('/:id', async (req, res) => {
-  await Blog.findByIdAndDelete(req.params.id);
-  res.status(204).end();
+  const toBeDeleted = await Blog.findById(req.params.id);
+  if (toBeDeleted.user[0].toString() === res.locals.userData.id) {
+    await Blog.findByIdAndDelete(req.params.id);
+    res.status(204).end();
+  } else {
+    res.status(401).end();
+  }
 });
 
 blogListRouter.put('/:id', async (req, res) => {
