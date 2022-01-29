@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
+import blogsComp from './components/Blog'
 import blogService from './services/blogs'
+import loginComp from './components/Login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [username, setUsername] = useState(null)
+  const [password, setPassword] = useState(null)
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   return (
-    <div>
-      <h2>blogs</h2>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-    </div>
+    <>
+      {user === null && loginComp({
+        username: username,
+        password: password,
+        setUsername: setUsername,
+        setPassword: setPassword,
+      })}
+      {user !== null && blogsComp(blogs)}
+    </>
   )
 }
 
