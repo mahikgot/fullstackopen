@@ -6,6 +6,7 @@ const formHandler = async ({username, password, setUsername, setPassword, setUse
   setUsername('');
   setPassword('');
   setUser(response);
+  window.localStorage.setItem('user', JSON.stringify(response));
 }
 
 const loginComp = ({username, password, setUsername, setPassword, setUser}) => {

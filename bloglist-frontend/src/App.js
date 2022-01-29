@@ -15,6 +15,13 @@ const App = () => {
     )
   }, [])
 
+  useEffect(() => {
+    const currentUser = window.localStorage.getItem('user');
+    if (currentUser) {
+      setUser(JSON.parse(currentUser));
+    }
+  }, [])
+
   return (
     <>
       {user === null && loginComp({
@@ -24,7 +31,7 @@ const App = () => {
         setPassword,
         setUser,
       })}
-      {user !== null && blogsComp({blogs})}
+      {user !== null && blogsComp({blogs, user, setUser})}
     </>
   )
 }
