@@ -1,14 +1,17 @@
 import React from 'react'
 import login from '../services/login'
-const formHandler = async (username, password, e) => {
+const formHandler = async ({username, password, setUsername, setPassword, setUser}, e) => {
   e.preventDefault();
   const response = await login({username, password});
-  console.log(response);
-  }
-const loginComp = ({username, password, setUsername, setPassword}) => {
+  setUsername('');
+  setPassword('');
+  setUser(response);
+}
+
+const loginComp = ({username, password, setUsername, setPassword, setUser}) => {
   return (
     <div>
-      <form onSubmit={(e) => formHandler(username, password, e)}>
+      <form onSubmit={(e) => formHandler({username, password, setUsername, setPassword, setUser}, e)}>
         <div>
           <label> username
             <input

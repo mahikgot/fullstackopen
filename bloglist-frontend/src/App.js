@@ -18,12 +18,13 @@ const App = () => {
   return (
     <>
       {user === null && loginComp({
-        username: username,
-        password: password,
-        setUsername: setUsername,
-        setPassword: setPassword,
+        username,
+        password,
+        setUsername,
+        setPassword,
+        setUser,
       })}
-      {user !== null && blogsComp(blogs)}
+      {user !== null && blogsComp({blogs})}
     </>
   )
 }
