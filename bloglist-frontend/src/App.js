@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import blogsComp from './components/Blog'
-import blogService from './services/blogs'
+import Blogs from './components/Blog'
 import loginComp from './components/Login'
+const {getAll} = require('./services/blogs')
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
+    getAll().then(blogs =>
       setBlogs( blogs )
     )
   }, [])
@@ -31,7 +34,18 @@ const App = () => {
         setPassword,
         setUser,
       })}
-      {user !== null && blogsComp({blogs, user, setUser})}
+      {user !== null && Blogs({
+        blogs,
+        user,
+        title,
+        author,
+        url,
+        setBlogs,
+        setUser,
+        setTitle,
+        setAuthor,
+        setUrl
+      })}
     </>
   )
 }
