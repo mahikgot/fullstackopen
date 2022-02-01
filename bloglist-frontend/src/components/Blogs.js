@@ -1,9 +1,12 @@
 import React from 'react'
+import Togglable from './Togglable'
 
 const Blogs  = ({blogs}) => {
   const Blog = ({blog}) => (
     <div>
-      {blog.title} {blog.author}
+      <Togglable visibleLabel='show' hiddenLabel='hide'>
+        {blog.title} {blog.author}
+      </Togglable>
     </div>
   )
   return (
