@@ -23,9 +23,9 @@ const Togglable = ({visibleLabel, hiddenLabel, children}) => {
 
   return (
     <div>
-      <div style={{display: visible}}>
+      <span style={{display: visible}}>
         {children}
-      </div>
+      </span>
       <button onClick={onClickHandler}>
         {labelHandler()}
       </button>
