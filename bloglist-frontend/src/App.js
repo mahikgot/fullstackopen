@@ -3,6 +3,8 @@ import Blogs from './components/Blog'
 import Login from './components/Login'
 import Logout from './components/Logout'
 import CreateBlog from './components/CreateBlog'
+import UserVisible from './components/UserVisible'
+import UserHidden from './components/UserHidden'
 const {getAll} = require('./services/blogs')
 
 const App = () => {
@@ -24,14 +26,14 @@ const App = () => {
 
   return (
     <>
-      <Login setUser={(props) => setUser(props)} />
-      <Logout user={user} setUser={(props) => setUser(props)} />
-      <CreateBlog setBlogs={(props) => setBlogs(props)} user={user} />
-      {user !== null && Blogs({
-        blogs,
-        user,
-        setUser
-      })}
+      <UserHidden user={user}>
+        <Login setUser={(props) => setUser(props)} />
+      </UserHidden>
+      <UserVisible user={user}>
+        <Logout user={user} setUser={(props) => setUser(props)} />
+        <CreateBlog setBlogs={(props) => setBlogs(props)} user={user} />
+        <Blogs blogs={blogs} />
+      </UserVisible>
     </>
   )
 }
