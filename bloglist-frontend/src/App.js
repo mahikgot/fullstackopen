@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Blogs from './components/Blog'
 import Login from './components/Login'
+import Logout from './components/Logout'
 import CreateBlog from './components/CreateBlog'
 const {getAll} = require('./services/blogs')
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState({})
 
   useEffect(() => {
     getAll().then(blogs =>
@@ -24,6 +25,7 @@ const App = () => {
   return (
     <>
       <Login setUser={(props) => setUser(props)} />
+      <Logout user={user} setUser={(props) => setUser(props)} />
       <CreateBlog setBlogs={(props) => setBlogs(props)} user={user} />
       {user !== null && Blogs({
         blogs,
