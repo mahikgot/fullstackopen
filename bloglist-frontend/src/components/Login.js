@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState} from 'react'
 import login from '../services/login'
 const formHandler = async ({username, password, setUsername, setPassword, setUser}, e) => {
   e.preventDefault();
@@ -9,7 +9,9 @@ const formHandler = async ({username, password, setUsername, setPassword, setUse
   window.localStorage.setItem('user', JSON.stringify(response));
 }
 
-const loginComp = ({username, password, setUsername, setPassword, setUser}) => {
+const Login = ({setUser}) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <div>
       <form onSubmit={(e) => formHandler({username, password, setUsername, setPassword, setUser}, e)}>
@@ -41,4 +43,4 @@ const loginComp = ({username, password, setUsername, setPassword, setUser}) => {
   )
 }
 
-export default loginComp
+export default Login
