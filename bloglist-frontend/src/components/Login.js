@@ -1,17 +1,20 @@
 import React, { useState} from 'react'
 import login from '../services/login'
-const formHandler = async ({username, password, setUsername, setPassword, setUser}, e) => {
-  e.preventDefault();
-  const response = await login({username, password});
-  setUsername('');
-  setPassword('');
-  setUser(response);
-  window.localStorage.setItem('user', JSON.stringify(response));
-}
+
 
 const Login = ({setUser}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const formHandler = async ({username, password, setUsername, setPassword, setUser}, e) => {
+    e.preventDefault();
+    const response = await login({username, password});
+    setUsername('');
+    setPassword('');
+    setUser(response);
+    window.localStorage.setItem('user', JSON.stringify(response));
+  }
+
   return (
     <div>
       <form onSubmit={(e) => formHandler({username, password, setUsername, setPassword, setUser}, e)}>
