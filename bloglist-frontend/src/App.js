@@ -5,6 +5,7 @@ import Logout from './components/Logout'
 import CreateBlog from './components/CreateBlog'
 import UserVisible from './components/UserVisible'
 import UserHidden from './components/UserHidden'
+import Togglable from './components/Togglable'
 const {getAll} = require('./services/blogs')
 
 const App = () => {
@@ -31,7 +32,9 @@ const App = () => {
       </UserHidden>
       <UserVisible user={user}>
         <Logout user={user} setUser={(props) => setUser(props)} />
-        <CreateBlog setBlogs={(props) => setBlogs(props)} user={user} />
+        <Togglable visibleLabel='create new blog' hiddenLabel='cancel'>
+          <CreateBlog setBlogs={(props) => setBlogs(props)} user={user} />
+        </Togglable>
         <Blogs blogs={blogs} />
       </UserVisible>
     </>
