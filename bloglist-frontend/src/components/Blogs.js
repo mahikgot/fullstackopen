@@ -4,8 +4,17 @@ import Togglable from './Togglable'
 const Blogs  = ({blogs}) => {
   const Blog = ({blog}) => (
     <div>
-      <Togglable visibleLabel='show' hiddenLabel='hide'>
-        {blog.title} {blog.author}
+      {blog.title} {blog.author}
+      <Togglable visibleLabel='show' hiddenLabel='hide' up={true}>
+        <div>
+          {blog.url}
+        </div>
+        <div>
+          {blog.likes}
+        </div>
+        <div>
+          {blog.user.map((user) =><>{user.username}</>)}
+        </div>
       </Togglable>
     </div>
   )

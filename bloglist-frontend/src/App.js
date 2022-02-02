@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import Blogs from './components/Blog'
+import useAsyncEffect from 'use-async-effect'
+import Blogs from './components/Blogs'
 import Login from './components/Login'
 import Logout from './components/Logout'
 import CreateBlog from './components/CreateBlog'
@@ -12,10 +13,9 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState({})
 
-  useEffect(() => {
-    getAll().then(blogs =>
-      setBlogs( blogs )
-    )
+  useAsyncEffect(async () => {
+    const getted = await getAll();
+    setBlogs(getted);
   }, [])
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const App = () => {
       </UserHidden>
       <UserVisible user={user}>
         <Logout user={user} setUser={(props) => setUser(props)} />
-        <Togglable visibleLabel='create new blog' hiddenLabel='cancel'>
+        <Togglable visibleLabel='create new blog' hiddenLabel='cancel' up={false}>
           <CreateBlog setBlogs={(props) => setBlogs(props)} user={user} />
         </Togglable>
         <Blogs blogs={blogs} />
