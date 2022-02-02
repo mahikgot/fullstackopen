@@ -1,3 +1,4 @@
+import './App.css'
 import React, { useState, useEffect } from 'react'
 import useAsyncEffect from 'use-async-effect'
 import Blogs from './components/Blogs'

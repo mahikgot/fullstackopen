@@ -25,7 +25,7 @@ const Togglable = ({visibleLabel, hiddenLabel, up, children}) => {
     if (up) {
       return (
         <>
-          <button onClick={onClickHandler}>
+          <button class='button' onClick={onClickHandler}>
             {labelHandler()}
           </button>
           <span style={{display: visible}}>
@@ -40,7 +40,7 @@ const Togglable = ({visibleLabel, hiddenLabel, up, children}) => {
             <span style={{display: visible}}>
               {children}
             </span>
-            <button onClick={onClickHandler}>
+            <button class='button' onClick={onClickHandler}>
               {labelHandler()}
             </button>
         </>

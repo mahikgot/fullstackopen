@@ -11,7 +11,7 @@ const Blogs  = ({blogs}) => {
         </div>
         <div>
           {blog.likes}
-          <button>
+          <button class='button'>
             like
           </button>
         </div>
@@ -21,12 +21,21 @@ const Blogs  = ({blogs}) => {
       </Togglable>
     </div>
   )
+  const style = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'space-evenly'
+
+  }
   return (
     <div>
       <h2>blogs</h2>
-            {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
+      <div style={style}>
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} />
+        )}
+      </div>
     </div>
   )
 }
