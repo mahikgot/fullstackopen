@@ -11,6 +11,9 @@ const Blogs  = ({blogs}) => {
         </div>
         <div>
           {blog.likes}
+          <button>
+            like
+          </button>
         </div>
         <div>
           {blog.user.map((user) =><>{user.username}</>)}
